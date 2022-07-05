@@ -1,0 +1,72 @@
+package com.bridgelabz.spotify;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+
+public class SpotifyAPI {
+    public String token;
+    String userId;
+    String playlistId;
+    
+    @BeforeTest
+    public void getToken() {
+        token ="Bearer BQBYds7BvRFvo8bkxllgg8RHw2SakErmfmxFY10rF3zJe0wnRiERegkZaTfbe-o1-xsdSJqZGeBIIVlxLFt5PItxT8oriFzY69siocOz28yR3XHAhd7vd9BRagOBpxPDUyJuQgwAhARkrQmCZ0sH3gpqVq2nKuOlRRQNNcNyzp02K-82so3bLiykNn2niO__ztVHitKzro1SbFs46FeWoEZUGD5Lx5wLw6J58JAm7EVU5WhTrgjpbCZ5OOUIP7bHA0L94bMwtzPZRuTFOktb5WCfM3mbK33kYm-_4E3E";
+    }
+    
+    @Test (priority = 0)
+    public void testGet_Current_Profile() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization",token)
+                .when()
+                .get("  https://api.spotify.com/v1/me/playlists");
+        response.prettyPrint();
+        userId = response.path("id");
+        System.out.println("USer Id is "+userId);
+        response.then().assertThat().statusCode(200);
+
+        Assert.assertEquals(userId, "31j235tqsa7trlqlr3cjkqzwhvnm");
+    }
+    
+    private Object given() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Test (priority = 1)
+    public void testGet_UserProfile() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization",token)
+                .when()
+                .get("https://api.spotify.com/v1/users/"+userId+"");
+        response.prettyPrint();
+        int statusCode = response.getStatusCode();
+        System.out.println("status code " + statusCode);
+        Assert.assertEquals(statusCode, 200);
+    }
+    
+    @Test (priority = 2)
+    public void createPlaylist() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization",token)
+                .body("{\r\n"
+                        + "  \"name\": \"Automation t\",\r\n"
+                        + "  \"description\": \"New playlist description\",\r\n"
+                        + "  \"public\": false\r\n"
+                        + "}")
+                .when()
+                .post("https://api.spotify.com/v1/users/"+userId+"/playlists");
+        response.prettyPrint();
+        playlistId = response.path("id");
+        System.out.println("Playlist Id is "+playlistId);
+        response.then().assertThat().statusCode(201);
+    }
+}

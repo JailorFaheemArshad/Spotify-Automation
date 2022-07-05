@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Default test(failed)">
+    <classes>
+      <class name="com.bridgelabz.spotify.SpotifyAPI">
+        <methods>
+          <include name="Get_Current_Users_Profile"/>
+          <include name="Remove_Playlist_Items"/>
+          <include name="Search_for_Item"/>
+          <include name="getTrack"/>
+          <include name="Get_Playlist_Items"/>
+          <include name="Get_Tracks_Audio_Features"/>
+          <include name="Get_Several_Tracks"/>
+          <include name="Create_Playlist"/>
+          <include name="Get_Current_User_Playlists"/>
+          <include name="Get_Track_Audio_Analysis"/>
+          <include name="Get_User_Playlists"/>
+          <include name="Get_Users_Profile"/>
+          <include name="Get_Track_Audio_Features"/>
+          <include name="Get_Playlist"/>
+          <include name="getToken"/>
+          <include name="Get_Track"/>
+          <include name="Change_Playlist_Details"/>
+          <include name="Get_Playlist_Cover_Image"/>
+          <include name="Add_Items_to_Playlist"/>
+        </methods>
+      </class> <!-- com.bridgelabz.spotify.SpotifyAPI -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
